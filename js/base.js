@@ -6,6 +6,7 @@ $(function() {
 	});
 })
 
+// 监听标题一的内容
 function listenH1 (event) {
 	$(".home-1 section").each(function(index, element){
 		var labelHeight = $(this).offset().top;
@@ -41,6 +42,7 @@ function listenH1 (event) {
 	});
 }
 
+// 监听标题二的内容
 function listenH2 (event) {
 	$(".home-2 section").each(function(index, element){
 		var labelHeight = $(this).offset().top;
@@ -68,4 +70,84 @@ function listenH2 (event) {
 			}
 		}
 	});
+}
+
+function listenSwiper () {
+	
+	var divList = $(".swiper-wrapper div");
+	
+	// 每一组的个数
+	var groupNum = parseInt(divList / 3) - 1;
+	
+	setTimeout(function () {
+		$(".swiper-wrapper div").each(function(index, element){
+			if ($(this).hasClass('.swiper-slide-duplicate')) {
+				if (index >= 0 && index <= groupNum) { // 第一组
+					if ($(this).hasClass('swiper-slide-duplicate-prev')) {
+						$(this).removeClass('swiper-slide-duplicate-prev');
+					}
+					if ($(this).hasClass('swiper-slide-duplicate-active')) {
+						$(this).removeClass('swiper-slide-duplicate-active');
+						$(this).addClass('swiper-slide-duplicate-prev')
+					}
+					if ($(this).hasClass('swiper-slide-duplicate-next')) {
+						$(this).removeClass('swiper-slide-duplicate-next');
+						$(this).addClass('swiper-slide-duplicate-active');
+						if (index == groupNum) { // 如果当前是最后一个
+							$(".swiper-wrapper div")[0].addClass('swiper-slide-duplicate-next')
+						} else {
+							$(this).next().addClass('swiper-slide-duplicate-next');
+						}
+						return;
+					}
+				}
+			}
+		});
+	}, 1000);
+	setTimeout(function () {
+		$(".swiper-wrapper div").each(function(index, element){
+			if (index > groupNum && index <= groupNum * 2) { // 第二组
+				if ($(this).hasClass('swiper-slide-duplicate-prev')) {
+					$(this).removeClass('swiper-slide-duplicate-prev');
+				}
+				if ($(this).hasClass('swiper-slide-duplicate-active')) {
+					$(this).removeClass('swiper-slide-duplicate-active');
+					$(this).addClass('swiper-slide-duplicate-prev')
+				}
+				if ($(this).hasClass('swiper-slide-duplicate-next')) {
+					$(this).removeClass('swiper-slide-duplicate-next');
+					$(this).addClass('swiper-slide-duplicate-active');
+					if (index == groupNum) { // 如果当前是最后一个
+						$(".swiper-wrapper div")[groupNum + 1].addClass('swiper-slide-duplicate-next')
+					} else {
+						$(this).next().addClass('swiper-slide-duplicate-next');
+					}
+					return;
+				}
+			}
+		});
+	}, 1000);
+	setTimeout(function () {
+		$(".swiper-wrapper div").each(function(index, element){
+			if (index > groupNum * 2 && index <= groupNum * 3) { // 第三组
+				if ($(this).hasClass('swiper-slide-duplicate-prev')) {
+					$(this).removeClass('swiper-slide-duplicate-prev');
+				}
+				if ($(this).hasClass('swiper-slide-duplicate-active')) {
+					$(this).removeClass('swiper-slide-duplicate-active');
+					$(this).addClass('swiper-slide-duplicate-prev')
+				}
+				if ($(this).hasClass('swiper-slide-duplicate-next')) {
+					$(this).removeClass('swiper-slide-duplicate-next');
+					$(this).addClass('swiper-slide-duplicate-active');
+					if (index == groupNum) { // 如果当前是最后一个
+						$(".swiper-wrapper div")[0].addClass('swiper-slide-duplicate-next')
+					} else {
+						$(this).next().addClass('swiper-slide-duplicate-next');
+					}
+					return;
+				}
+			}
+		});
+	}, 1000);
 }
