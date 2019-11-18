@@ -88,7 +88,7 @@ function listenSwiper () {
 	var moveWidth = labelWidth / groupNum;
 	setInterval(function(){
 		$('.swiper-wrapper').css('transition-duration', '2000ms').css('transform', 'translate3d(-' + (labelWidth + moveWidth) + ', 0px, 0px)');
-	},2000)
+	},2000)    
 	
 	setInterval(function () {
 		
