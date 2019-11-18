@@ -100,7 +100,7 @@ function listenSwiper () {
 		moveNum ++;
 		$('.swiper-wrapper').css('transition-duration', '2000ms').css('transform', 'translate3d(' + afterWidth + 'px, 1px, 2px)');
 		
-	},2000)
+	},2000) 
 	
 	setInterval(function () {
 		for (var i = 0; i < groupNum; i ++) {
