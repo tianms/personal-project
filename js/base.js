@@ -83,21 +83,26 @@ function listenSwiper () {
 	
 	var divList = $(".swiper-wrapper div");
 	
-	var labelWidth = $('.swiper-wrapper').width();
+	var labelWidth = $('.swiper-wrapper').width(); // div宽度
 	
-	var moveWidth = labelWidth / groupNum;
+	var moveWidth = labelWidth / groupNum; // 每次移动的距离
+	
+	var moveNum = 0;
+	
+	var afterWidth = -labelWidth;
+	
 	setInterval(function(){
-		$('.swiper-wrapper').css('transition-duration', '2000ms').css('transform', 'translate3d(-' + (labelWidth + moveWidth) + ', 0px, 0px)');
+		if (moveNum == groupNum) {
+			afterWidth = -labelWidth;
+			moveNum = 0;
+		}
+		afterWidth = afterWidth - moveWidth; // 向左移动
+		moveNum ++;
+		$('.swiper-wrapper').css('transition-duration', '2000ms').css('transform', 'translate3d(' + afterWidth + 'px, 1px, 2px)');
+		
 	},2000)
 	
 	setInterval(function () {
-		
-		// var labelWidth = $('.swiper-wrapper').width();
-		// setInterval(function(){$('.swiper-wrapper').css({'transition-duration':'2000ms','transform':'translate3d(10px, 0px, 0px)'});},2000ms)
-		
-		// transition-duration: 2000ms;
-		//     transform: translate3d(-908.25px, 0px, 0px);
-		
 		for (var i = 0; i < groupNum; i ++) {
 			if ($(divList[i]).hasClass('swiper-slide-duplicate-prev')) {
 			 	$(divList[i]).removeClass('swiper-slide-duplicate-prev');
