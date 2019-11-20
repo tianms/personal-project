@@ -4554,3 +4554,12 @@ button.swiper-pagination-bullet {
 .i-ul li {
 	font-size: 14px;
 }
+
+.swiper-con{
+	animation: move 15s linear infinite normal;
+	animation-fill-mode:forwards;
+}
+@keyframes move{
+	0%{transform:translateX(0px);}
+	100%{transform:translateX(-1528px);}
+}

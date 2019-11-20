@@ -5,7 +5,7 @@ $(function() {
 		listenH2(this);
 	});
 	
-	listenSwiper();
+	// listenSwiper();
 })
 
 // 监听标题一的内容
@@ -83,7 +83,7 @@ function listenSwiper () {
 	
 	var divList = $(".swiper-wrapper div");
 	
-	var labelWidth = $('.swiper-wrapper').width(); // div宽度
+	var labelWidth = $('.swiper-wrapper').width(); // disv宽度
 	
 	var moveWidth = labelWidth / groupNum; // 每次移动的距离
 	
