@@ -1,3 +1,5 @@
+var menuList = []; // 导航列表
+
 $(function() {
 	// 监听滚动事件
 	$(window).scroll(function() {
@@ -6,7 +8,100 @@ $(function() {
 	});
 	
 	// listenSwiper();
+	
+	// 初始化导航
+	initMenu();
 })
+
+// 初始化菜单
+function initMenu () {
+	// 获取导航下的html内容
+	var navLabelCon = $('.nav-right').html();
+	// 定义选中的导航下表
+	var activeIndex = -1;
+	
+	if (navLabelCon != null) { // 导航下有菜单
+		// 实际存在的导航列表
+		var navItemList = $('.nav-item');
+		
+		for (var n = 0; n < navItemList.length; n++) {
+			if ($(navItemList[n]).hasClass('active')) {
+				activeIndex = n; // 记录选中的下标
+				break;
+			}
+		}
+		// 清空菜单下原有的内容
+		$('.nav-right').empty();
+	} else {
+		// 如果导航下没有内容，证明未加载过导航，则选中导航的第一个
+		activeIndex = 1;
+	}
+	// 获取导航列表
+	menuList = [
+		{'menuName': '首页', 'id': 'layout', 'childMenu': []},
+		{'menuName': '研究领域', 'id': 'yjly', 'childMenu': [{'menuName': '三维数字化','id':'h1'}, {'menuName': '人体识别跟踪','id':'h2'}, {'menuName': '智能图像识别','id':'h3'}, {'menuName': '机器人视觉','id':'h4'}]},
+		{'menuName': '合作伙伴', 'id': 'hzhb', 'childMenu': [{'menuName': 'DFKI','id':'h5'}, {'menuName': '四维时代','id':'h6'}, {'menuName': '四维看看','id':'sdkk'}, {'menuName': 'GraphicsMedia','id':'h7'}]},
+		{'menuName': '中德大会', 'id': 'zddh', 'childMenu': [{'menuName': '往届回顾','id':'wjhg'}]}, 
+		{'menuName': '消息资讯', 'id': 'xxzx', 'childMenu': []}, 
+		{'menuName': '关于我们', 'id': 'gywm', 'childMenu': []}
+	];
+	// 导航的开始标签
+	var menuHtml = '<table><tr><td><ul class="nav-items">';
+	
+	menuList.forEach(function (data, index) {
+		// 拼装一级导航
+		menuHtml = menuHtml + '<li class="nav-item">' + data.menuName + '<span class="line"></span>';
+		// 导航下级菜单的开始标签
+		menuHtml = menuHtml + '<ul class="sub-items">';
+		// 导航下级菜单列表
+		var childMenuList = data.childMenu;
+		// 如果导航下包含下级
+		if (childMenuList != null && childMenuList != '' && childMenuList != [] && childMenuList.length > 0) {
+			// 循环导航下级菜单内容
+			childMenuList.forEach(function (childData, childIndex) {
+				// 拼装导航下级菜单
+				menuHtml = menuHtml + '<li>' + childData.menuName + '</li>'
+			})
+		}
+		// 导航下级菜单结束标签
+		menuHtml = menuHtml + '</ul></li>';
+	})
+	// 导航的结束标签
+	menuHtml = menuHtml + '</ul></td></tr></table>'
+	// 给导航添加菜单    
+    $('.nav-right').append(menuHtml);
+    $('.nav-items li:first').addClass('active');
+    //导航点击跳转到指定位置
+    $(".nav-items li").click(function(){
+    	var text = $(this).text();
+    	$(this).addClass("active").siblings().removeClass("active");
+    	if($(this).parent("ul") && $(this).parent("ul").hasClass("sub-items")){
+ 	    	menuList.forEach(function(data,index){
+	    		data.childMenu.forEach(function (childData, childIndex) {
+	    			if(childData.menuName == text){
+	    				var flag = "#"+childData.id;
+    					window.location.hash = flag;
+    					console.log(flag);
+	    				if(text != "三维数字化" && text != "智能图像识别" && text!="往届回顾"){
+	    					$(this).scrollTop($(flag).offset().top-300);
+	    				}
+	    			}
+	    		})
+	    	})
+    	}else{
+    		menuList.forEach(function(data,index){
+    			if(text.indexOf(data.menuName) != -1){
+    				var flag = "#"+data.id;
+    				window.location.hash = flag;	
+    				$(this).scrollTop($(flag).offset().top-100);
+    			}
+    		})
+    	}
+    	event.stopPropagation();
+    })
+}
+
+
 
 // 监听标题一的内容
 function listenH1 (event) {
@@ -208,3 +303,6 @@ function listenSwiper () {
 		}
 	}, 2000);
 }
+
+
+
